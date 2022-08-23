@@ -1,11 +1,11 @@
 import {Grid, Paper} from "@mui/material";
 
 type MessageProps = {
-  type: 'sender' | 'receiver'
+  sender: string
   message: string
+  isSender: boolean
 }
-export const Message = ({type = 'sender', message}: MessageProps) => {
-  const isSender = type == 'sender'
+export const Message = ({sender, message, isSender}: MessageProps) => {
   return (
     <>
       {!isSender || <Grid xs={4}/>}
@@ -13,13 +13,16 @@ export const Message = ({type = 'sender', message}: MessageProps) => {
         <Paper sx={{
           backgroundColor: isSender ? 'secondary.dark' : 'primary.main',
           borderRadius: '1rem',
-          color:'white',
+          color: 'white',
           paddingX: '2rem',
-          paddingY: '4rem',
+          paddingY: '2rem',
           marginX: '1rem',
           marginY: '0.5rem'
         }}>
           {message}
+          <div style={{textAlign: 'right', marginTop: '1rem'}}>
+            <strong>Sent By : {sender}</strong>
+          </div>
         </Paper>
       </Grid>
       {isSender || <Grid xs={4}/>}

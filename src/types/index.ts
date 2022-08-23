@@ -1,4 +1,5 @@
 export type MessageType = {
-  message: string,
-  type: 'sender' | 'receiver'
+  timestamp:number
+  sender:string
+  message: string
 }
