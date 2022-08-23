@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import {chatSlice} from "../feature/chat/chatSlice";
 
 
 export const store = configureStore({
   reducer: {
+    chat:chatSlice.reducer
   },
 });
 
@@ -14,3 +16,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export default store
