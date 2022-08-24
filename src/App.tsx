@@ -6,6 +6,9 @@ import {useAppDispatch, useAppSelector} from "./store/hooks";
 import {selectMessages, sendMessage, setMessages} from "./feature/chat/chatSlice";
 
 const fetchMessages = () => {
+  /**
+   * Function to fetch Messages from Local Storage
+   */
   let messages = [];
   if (window.localStorage.getItem('messages')) {
     messages = JSON.parse(window.localStorage.getItem('messages') as string)
@@ -24,6 +27,9 @@ function App() {
 
   useEffect(
     () => {
+      /**
+       * Fetch Messages from LocalStorage and add them to state every half a second
+       */
       if (!intervalID) {
         const id = setInterval(
           () => {
@@ -38,10 +44,12 @@ function App() {
     , [intervalID])
   let messages = useAppSelector(selectMessages);
   const dispatch = useAppDispatch();
+
   const onNameSubmitHandler = (e: any) => {
     e.preventDefault()
-    setName('')
+    setSubmitted(true)
   }
+
   const onMessageSubmitHandler = (e: any) => {
     e.preventDefault()
     dispatch(sendMessage({
@@ -51,14 +59,17 @@ function App() {
     }))
     setMessage('')
   }
+
   useEffect(() => {
     // scroll in into view anytime messages are added
     const current:any =  bottomRef.current
     current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid item xs={12} md={6}>
+        {/*Show Name form if the Name is not yet saved into the state */}
         {!(name && isSubmitted) ?
           <>
             <form onSubmit={onNameSubmitHandler}>
@@ -69,7 +80,6 @@ function App() {
                            sx={{marginBottom: '0.6rem'}}
                            onChange={e => setName(e.target.value)}/>
                 <Button
-                  onClick={() => setSubmitted(true)}
                   type={"submit"}
                   variant={"contained"}>Submit</Button>
               </FormGroup>
@@ -79,14 +89,12 @@ function App() {
           <>
             <Paper sx={{borderRadius: '1rem', height: '80vh', padding: '2rem', marginTop: '5vh'}}>
               <Box sx={{height: '80%', overflowY: 'auto'}}>
-                <Grid container>
                   {
                     messages.map(
                       ({sender, message}) => (<Message isSender={sender === name} sender={sender} message={message}/>
                       )
                     )}
                   <div ref={bottomRef}/>
-                </Grid>
               </Box>
               <Box sx={{height: '10%'}}>
                 <form onSubmit={onMessageSubmitHandler}>

@@ -13,7 +13,7 @@ const initialState: ChatState = {
 export const sendMessage = (message: MessageType): AppThunk =>
   (dispatch, getState) => {
     dispatch(addMessage(message));
-    // add to localstorage
+    // add messages to localstorage
     localStorage.setItem('messages', JSON.stringify(getState().chat.messages))
   };
 
