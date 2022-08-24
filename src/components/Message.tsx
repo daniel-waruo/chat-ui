@@ -7,9 +7,8 @@ type MessageProps = {
 }
 export const Message = ({sender, message, isSender}: MessageProps) => {
   return (
-    <>
-      {!isSender || <Grid xs={4}/>}
-      <Grid item justifySelf={'center'} xs={8}>
+    <Grid container justifyContent={isSender ? 'end' : 'start'}>
+      <Grid item xs={8}>
         <Paper sx={{
           backgroundColor: isSender ? 'secondary.dark' : 'primary.main',
           borderRadius: '1rem',
@@ -25,7 +24,6 @@ export const Message = ({sender, message, isSender}: MessageProps) => {
           </div>
         </Paper>
       </Grid>
-      {isSender || <Grid xs={4}/>}
-    </>
+    </Grid>
   )
 }
